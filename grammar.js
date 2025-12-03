@@ -15,7 +15,6 @@ module.exports = grammar({
     default: () => ["let", "if", "else", "true", "false"],
   },
   extras: ($) => [/\s/, $.comment],
-  conflicts: ($) => [[$.unary, $.call, $.if_expr], [$.if_expr]],
 
   rules: {
     // TODO: add the actual grammar rules
@@ -43,33 +42,47 @@ module.exports = grammar({
         $._primary,
       ),
 
-    logic_or: ($) => prec(0, seq($._expression, "or", $._expression)),
-    logic_and: ($) => prec(1, seq($._expression, "and", $._expression)),
+    logic_or: ($) =>
+      prec(0, prec.left(seq($._expression, "or", $._expression))),
+    logic_and: ($) =>
+      prec(1, prec.left(seq($._expression, "and", $._expression))),
     equality: ($) =>
-      prec(2, seq($._expression, choice("==", "!="), $._expression)),
+      prec(2, prec.left(seq($._expression, choice("==", "!="), $._expression))),
     comparison: ($) =>
-      prec(3, seq($._expression, choice("<", "<=", ">", ">="), $._expression)),
-    term: ($) => prec(4, seq($._expression, choice("+", "-"), $._expression)),
-    factor: ($) => prec(5, seq($._expression, choice("*", "/"), $._expression)),
-    unary: ($) => prec(6, seq(choice("!", "-", $._expression))),
+      prec(
+        3,
+        prec.left(
+          seq($._expression, choice("<", "<=", ">", ">="), $._expression),
+        ),
+      ),
+    term: ($) =>
+      prec(4, prec.left(seq($._expression, choice("+", "-"), $._expression))),
+    factor: ($) =>
+      prec(5, prec.left(seq($._expression, choice("*", "/"), $._expression))),
+    unary: ($) => prec(6, seq(choice("!", "-"), $._expression)),
     call: ($) => prec(7, seq($._expression, $._call_arguments)),
 
     _call_arguments: ($) =>
       seq("(", repeat(seq($._expression, ",")), optional($._expression), ")"),
 
     block: ($) =>
-      choice(
-        seq("{", seq(repeat($._statement), optional($._expression)), "}"),
-        $.if_expr,
-        $.closure,
-      ),
+      choice(seq("{", seq(repeat($._statement), optional($._expression)), "}")),
 
     if_expr: ($) =>
       seq("if", $._expression, $.block, optional(seq("else", $.block))),
-    closure: ($) => seq($._binding_args, "=", $._expression),
+    closure: ($) => prec.right(seq($._binding_args, "=", $._expression)),
 
     _primary: ($) =>
-      prec(8, choice($.bool, $.number, $.string, $.identifier, $.block)),
+      prec(
+        8,
+        choice(
+          $.bool,
+          $.number,
+          $.string,
+          $.identifier,
+          choice($.block, $.if_expr, $.closure),
+        ),
+      ),
 
     bool: () => choice("true", "false"),
     number: () => /[0-9]+(\.[0-9]+)?/,
