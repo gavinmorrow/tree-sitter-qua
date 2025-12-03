@@ -15,21 +15,22 @@ module.exports = grammar({
     default: () => ["let", "if", "else", "true", "false"],
   },
   extras: ($) => [/\s/, $.comment],
+  supertypes: ($) => [$.expression],
 
   rules: {
     // TODO: add the actual grammar rules
     source_file: ($) => repeat($._statement),
 
     _statement: ($) =>
-      choice(seq("let", $.binding, ";"), seq($._expression, ";")),
+      choice(seq("let", $.binding, ";"), seq($.expression, ";")),
 
     binding: ($) =>
-      seq($.identifier, optional($.binding_args), "=", $._expression),
+      seq($.identifier, optional($.binding_args), "=", $.expression),
 
     binding_args: ($) =>
       seq("(", repeat(seq($.identifier, ",")), optional($.identifier), ")"),
 
-    _expression: ($) =>
+    expression: ($) =>
       choice(
         $.logic_or,
         $.logic_and,
@@ -42,40 +43,39 @@ module.exports = grammar({
         $._primary,
       ),
 
-    logic_or: ($) =>
-      prec(0, prec.left(seq($._expression, "or", $._expression))),
+    logic_or: ($) => prec(0, prec.left(seq($.expression, "or", $.expression))),
     logic_and: ($) =>
-      prec(1, prec.left(seq($._expression, "and", $._expression))),
+      prec(1, prec.left(seq($.expression, "and", $.expression))),
     equality: ($) =>
-      prec(2, prec.left(seq($._expression, choice("==", "!="), $._expression))),
+      prec(2, prec.left(seq($.expression, choice("==", "!="), $.expression))),
     comparison: ($) =>
       prec(
         3,
         prec.left(
-          seq($._expression, choice("<", "<=", ">", ">="), $._expression),
+          seq($.expression, choice("<", "<=", ">", ">="), $.expression),
         ),
       ),
     term: ($) =>
-      prec(4, prec.left(seq($._expression, choice("+", "-"), $._expression))),
+      prec(4, prec.left(seq($.expression, choice("+", "-"), $.expression))),
     factor: ($) =>
-      prec(5, prec.left(seq($._expression, choice("*", "/"), $._expression))),
-    unary: ($) => prec(6, seq(choice("!", "-"), $._expression)),
-    call: ($) => prec(7, seq($._expression, $.call_args)),
+      prec(5, prec.left(seq($.expression, choice("*", "/"), $.expression))),
+    unary: ($) => prec(6, seq(choice("!", "-"), $.expression)),
+    call: ($) => prec(7, seq($.expression, $.call_args)),
 
     call_args: ($) =>
-      seq("(", repeat(seq($._expression, ",")), optional($._expression), ")"),
+      seq("(", repeat(seq($.expression, ",")), optional($.expression), ")"),
 
     block: ($) =>
-      choice(seq("{", seq(repeat($._statement), optional($._expression)), "}")),
+      choice(seq("{", seq(repeat($._statement), optional($.expression)), "}")),
 
     if_expr: ($) =>
       seq(
         "if",
-        $._expression,
+        $.expression,
         $.block,
         optional(seq("else", choice(seq("if", $.if_expr), $.block))),
       ),
-    closure: ($) => prec.right(seq($.binding_args, "=", $._expression)),
+    closure: ($) => prec.right(seq($.binding_args, "=", $.expression)),
 
     _primary: ($) =>
       prec(
