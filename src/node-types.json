@@ -88,11 +88,11 @@
       "required": true,
       "types": [
         {
-          "type": "binding_args",
+          "type": "expression",
           "named": true
         },
         {
-          "type": "expression",
+          "type": "pattern",
           "named": true
         }
       ]
@@ -290,6 +290,25 @@
       "types": [
         {
           "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binding_args",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         }
       ]

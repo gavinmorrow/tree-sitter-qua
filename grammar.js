@@ -24,15 +24,9 @@ module.exports = grammar({
 
     statement: ($) => choice($.binding, $.expression_stmt),
 
-    binding: ($) =>
-      seq(
-        "let",
-        $.identifier,
-        optional($.binding_args),
-        "=",
-        $.expression,
-        ";",
-      ),
+    binding: ($) => seq("let", $.pattern, "=", $.expression, ";"),
+
+    pattern: ($) => seq($.identifier, optional($.binding_args)),
 
     binding_args: ($) =>
       seq("(", repeat(seq($.identifier, ",")), optional($.identifier), ")"),

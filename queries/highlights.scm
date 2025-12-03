@@ -10,7 +10,7 @@
 (identifier) @variable
 (comment) @comment
 
-(binding (identifier) @function (binding_args))
+(binding (pattern (identifier) @function (binding_args)))
 (binding_args (identifier) @variable.parameter)
 
 ((identifier) @constructor
