@@ -6,11 +6,10 @@
       "camelcase": "Qua",
       "title": "Qua",
       "scope": "source.qua",
-      "file-types": [
-        "qua"
-      ],
+      "file-types": ["qua"],
       "injection-regex": "^qua$",
-      "class-name": "TreeSitterQua"
+      "class-name": "TreeSitterQua",
+      "highlights": "queries/highlights.scm"
     }
   ],
   "metadata": {

@@ -60,16 +60,21 @@ module.exports = grammar({
     factor: ($) =>
       prec(5, prec.left(seq($._expression, choice("*", "/"), $._expression))),
     unary: ($) => prec(6, seq(choice("!", "-"), $._expression)),
-    call: ($) => prec(7, seq($._expression, $._call_arguments)),
+    call: ($) => prec(7, seq($._expression, $.call_args)),
 
-    _call_arguments: ($) =>
+    call_args: ($) =>
       seq("(", repeat(seq($._expression, ",")), optional($._expression), ")"),
 
     block: ($) =>
       choice(seq("{", seq(repeat($._statement), optional($._expression)), "}")),
 
     if_expr: ($) =>
-      seq("if", $._expression, $.block, optional(seq("else", $.block))),
+      seq(
+        "if",
+        $._expression,
+        $.block,
+        optional(seq("else", choice(seq("if", $.if_expr), $.block))),
+      ),
     closure: ($) => prec.right(seq($.binding_args, "=", $._expression)),
 
     _primary: ($) =>
@@ -89,6 +94,6 @@ module.exports = grammar({
     string: () => /"[^"]*"/,
     identifier: () => /([a-z]|[A-Z]|_)([a-z]|[A-Z]|[0-9]|_)*/,
 
-    comment: () => /\/\/.*\$/,
+    comment: () => token(choice(seq("//", /.*/))),
   },
 });
