@@ -3,6 +3,7 @@
 [ "{" "}" "(" ")" ] @punctuation.bracket
 [ "," ] @punctuation.delimiter
 [ ";" ] @punctuation
+[ "=" "==" "!=" "+" "-" "*" "/" "<" "<=" ">" ">=" "or" "and"] @operator
 
 ; Constants
 (number) @number
