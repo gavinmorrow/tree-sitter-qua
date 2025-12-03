@@ -9,7 +9,8 @@
       "file-types": ["qua"],
       "injection-regex": "^qua$",
       "class-name": "TreeSitterQua",
-      "highlights": "queries/highlights.scm"
+      "highlights": "queries/highlights.scm",
+      "tags": "queries/tags.scm"
     }
   ],
   "metadata": {
