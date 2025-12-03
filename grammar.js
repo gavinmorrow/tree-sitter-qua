@@ -81,7 +81,7 @@ module.exports = grammar({
         "if",
         $.expression,
         $.block,
-        optional(seq("else", choice(seq("if", $.if_expr), $.block))),
+        optional(seq("else", choice($.if_expr, $.block))),
       ),
     closure: ($) => prec.right(seq($.binding_args, "=", $.expression)),
 

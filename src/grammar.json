@@ -504,17 +504,8 @@
                   "type": "CHOICE",
                   "members": [
                     {
-                      "type": "SEQ",
-                      "members": [
-                        {
-                          "type": "STRING",
-                          "value": "if"
-                        },
-                        {
-                          "type": "SYMBOL",
-                          "name": "if_expr"
-                        }
-                      ]
+                      "type": "SYMBOL",
+                      "name": "if_expr"
                     },
                     {
                       "type": "SYMBOL",
