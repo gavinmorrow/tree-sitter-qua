@@ -11,7 +11,6 @@
 
 (binding (identifier) @function (binding_args))
 (binding_args (identifier) @variable.parameter)
-(call (identifier) @function)
 
 ((identifier) @constructor
   (#match? @constructor "^[A-Z].*"))
