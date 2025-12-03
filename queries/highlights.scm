@@ -5,7 +5,6 @@
 
 ; Constants
 (number) @number
-(number) @constant.numeric
 (string) @string
 
 (identifier) @variable

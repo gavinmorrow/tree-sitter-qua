@@ -7,47 +7,29 @@
       "type": "REPEAT",
       "content": {
         "type": "SYMBOL",
-        "name": "_statement"
+        "name": "statement"
       }
     },
-    "_statement": {
+    "statement": {
       "type": "CHOICE",
       "members": [
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "let"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "binding"
-            },
-            {
-              "type": "STRING",
-              "value": ";"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "binding"
         },
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "expression"
-            },
-            {
-              "type": "STRING",
-              "value": ";"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "expression_stmt"
         }
       ]
     },
     "binding": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "STRING",
+          "value": "let"
+        },
         {
           "type": "SYMBOL",
           "name": "identifier"
@@ -71,6 +53,10 @@
         {
           "type": "SYMBOL",
           "name": "expression"
+        },
+        {
+          "type": "STRING",
+          "value": ";"
         }
       ]
     },
@@ -112,6 +98,19 @@
         {
           "type": "STRING",
           "value": ")"
+        }
+      ]
+    },
+    "expression_stmt": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "expression"
+        },
+        {
+          "type": "STRING",
+          "value": ";"
         }
       ]
     },
@@ -451,7 +450,7 @@
                   "type": "REPEAT",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "_statement"
+                    "name": "statement"
                   }
                 },
                 {
@@ -657,7 +656,8 @@
   "externals": [],
   "inline": [],
   "supertypes": [
-    "expression"
+    "expression",
+    "statement"
   ],
   "reserved": {
     "default": [

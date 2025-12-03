@@ -66,6 +66,20 @@
     ]
   },
   {
+    "type": "statement",
+    "named": true,
+    "subtypes": [
+      {
+        "type": "binding",
+        "named": true
+      },
+      {
+        "type": "expression_stmt",
+        "named": true
+      }
+    ]
+  },
+  {
     "type": "binding",
     "named": true,
     "fields": {},
@@ -108,11 +122,11 @@
       "required": false,
       "types": [
         {
-          "type": "binding",
+          "type": "expression",
           "named": true
         },
         {
-          "type": "expression",
+          "type": "statement",
           "named": true
         }
       ]
@@ -207,6 +221,21 @@
     }
   },
   {
+    "type": "expression_stmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "factor",
     "named": true,
     "fields": {},
@@ -276,11 +305,7 @@
       "required": false,
       "types": [
         {
-          "type": "binding",
-          "named": true
-        },
-        {
-          "type": "expression",
+          "type": "statement",
           "named": true
         }
       ]

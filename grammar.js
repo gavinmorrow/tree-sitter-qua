@@ -6,6 +6,7 @@
 
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
+//
 
 module.exports = grammar({
   name: "qua",
@@ -15,21 +16,28 @@ module.exports = grammar({
     default: () => ["let", "if", "else", "true", "false"],
   },
   extras: ($) => [/\s/, $.comment],
-  supertypes: ($) => [$.expression],
+  supertypes: ($) => [$.expression, $.statement],
 
   rules: {
     // TODO: add the actual grammar rules
-    source_file: ($) => repeat($._statement),
+    source_file: ($) => repeat($.statement),
 
-    _statement: ($) =>
-      choice(seq("let", $.binding, ";"), seq($.expression, ";")),
+    statement: ($) => choice($.binding, $.expression_stmt),
 
     binding: ($) =>
-      seq($.identifier, optional($.binding_args), "=", $.expression),
+      seq(
+        "let",
+        $.identifier,
+        optional($.binding_args),
+        "=",
+        $.expression,
+        ";",
+      ),
 
     binding_args: ($) =>
       seq("(", repeat(seq($.identifier, ",")), optional($.identifier), ")"),
 
+    expression_stmt: ($) => seq($.expression, ";"),
     expression: ($) =>
       choice(
         $.logic_or,
@@ -66,7 +74,7 @@ module.exports = grammar({
       seq("(", repeat(seq($.expression, ",")), optional($.expression), ")"),
 
     block: ($) =>
-      choice(seq("{", seq(repeat($._statement), optional($.expression)), "}")),
+      choice(seq("{", seq(repeat($.statement), optional($.expression)), "}")),
 
     if_expr: ($) =>
       seq(
