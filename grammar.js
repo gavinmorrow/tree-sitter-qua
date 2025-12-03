@@ -68,7 +68,7 @@ module.exports = grammar({
       seq("(", repeat(seq($.expression, ",")), optional($.expression), ")"),
 
     block: ($) =>
-      choice(seq("{", seq(repeat($.statement), optional($.expression)), "}")),
+      seq("{", seq(repeat($.statement), optional($.expression)), "}"),
 
     if_expr: ($) =>
       seq(
