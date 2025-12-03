@@ -2,6 +2,7 @@
 
 [ "{" "}" "(" ")" ] @punctuation.bracket
 [ "," ] @punctuation.delimiter
+[ ";" ] @punctuation
 
 ; Constants
 (number) @number
