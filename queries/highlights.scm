@@ -1,6 +1,6 @@
 [ "let" "if" "else" ] @keyword
 
-[ "{" "}" ] @punctuation.bracket
+[ "{" "}" "(" ")" ] @punctuation.bracket
 [ "," ] @punctuation.delimiter
 
 ; Constants
