@@ -14,7 +14,7 @@ module.exports = grammar({
   reserved: {
     default: () => ["let", "if", "else", "true", "false"],
   },
-
+  extras: ($) => [/\s/, $.comment],
   conflicts: ($) => [[$.unary, $.call, $.if_expr], [$.if_expr]],
 
   rules: {
@@ -75,5 +75,7 @@ module.exports = grammar({
     number: () => /[0-9]+(\.[0-9]+)?/,
     string: () => /"[^"]*"/,
     identifier: () => /([a-z]|[A-Z]|_)([a-z]|[A-Z]|[0-9]|_)*/,
+
+    comment: () => /\/\/.*\$/,
   },
 });

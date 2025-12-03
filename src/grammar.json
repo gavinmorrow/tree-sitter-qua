@@ -568,12 +568,20 @@
     "identifier": {
       "type": "PATTERN",
       "value": "([a-z]|[A-Z]|_)([a-z]|[A-Z]|[0-9]|_)*"
+    },
+    "comment": {
+      "type": "PATTERN",
+      "value": "\\/\\/.*\\$"
     }
   },
   "extras": [
     {
       "type": "PATTERN",
       "value": "\\s"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "comment"
     }
   ],
   "conflicts": [
