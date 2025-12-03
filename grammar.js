@@ -24,9 +24,9 @@ module.exports = grammar({
       choice(seq("let", $.binding, ";"), seq($._expression, ";")),
 
     binding: ($) =>
-      seq($.identifier, optional($._binding_args), "=", $._expression),
+      seq($.identifier, optional($.binding_args), "=", $._expression),
 
-    _binding_args: ($) =>
+    binding_args: ($) =>
       seq("(", repeat(seq($.identifier, ",")), optional($.identifier), ")"),
 
     _expression: ($) =>
@@ -70,7 +70,7 @@ module.exports = grammar({
 
     if_expr: ($) =>
       seq("if", $._expression, $.block, optional(seq("else", $.block))),
-    closure: ($) => prec.right(seq($._binding_args, "=", $._expression)),
+    closure: ($) => prec.right(seq($.binding_args, "=", $._expression)),
 
     _primary: ($) =>
       prec(

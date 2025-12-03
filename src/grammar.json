@@ -57,7 +57,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "_binding_args"
+              "name": "binding_args"
             },
             {
               "type": "BLANK"
@@ -74,7 +74,7 @@
         }
       ]
     },
-    "_binding_args": {
+    "binding_args": {
       "type": "SEQ",
       "members": [
         {
@@ -522,7 +522,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "_binding_args"
+            "name": "binding_args"
           },
           {
             "type": "STRING",
