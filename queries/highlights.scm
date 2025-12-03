@@ -3,9 +3,11 @@
 [ "{" "}" ] @punctuation.bracket
 [ "," ] @punctuation.delimiter
 
+; Constants
 (number) @number
+(number) @constant.numeric
 (string) @string
-(bool) @bool
+
 (identifier) @variable
 (comment) @comment
 
