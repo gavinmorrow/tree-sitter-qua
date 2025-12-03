@@ -18,3 +18,8 @@
 
 ((identifier) @function.builtin
   (#eq? @function.builtin "print"))
+
+; For Helix
+[ "if" "else" ] @keyword.control.conditional
+[ "let" ] @keyword.storage.type
+(number) @constant.numeric
